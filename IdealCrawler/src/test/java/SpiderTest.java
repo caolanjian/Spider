@@ -5,6 +5,7 @@ import java.util.TimerTask;
 
 import com.clj.exceptions.IsNotDirectoryException;
 import com.clj.httpUtils.FileLogHelper;
+import com.clj.resources.Resources;
 
 import us.codecraft.webmagic.Spider;
 
@@ -39,7 +40,7 @@ public class SpiderTest extends TimerTask{
 		{
 			int threadNum = 0;
 			spider = Spider.create(new HooKooPageProcessor())
-					  .addPipeline(new ArticleStorePipeline(ArticleStorePipeline.imagePath));
+					  .addPipeline(new ArticleStorePipeline(Resources.IMG_DOWNLOAD_PATH));
 			
 			Set<String> keySet = HaoKooFilter.authorsInitUrl.keySet();
 			for(String author : keySet)

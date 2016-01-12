@@ -7,9 +7,11 @@ import java.util.List;
 
 
 
+
 import com.clj.daoUtil.DaoUtil;
 import com.clj.daoUtil.HibernateDaoUtil;
 import com.clj.domain.Historyurl;
+import com.clj.resources.Resources;
 
 import us.codecraft.webmagic.Page;
 import us.codecraft.webmagic.Site;
@@ -31,6 +33,8 @@ public class HooKooPageProcessor implements PageProcessor{
 		// TODO Auto-generated method stub
 		
 		Html html = page.getHtml();
+		
+		String a = Resources.APACHE_HOME_SERVER_IP;
 		
 
 		page.addTargetRequests(html.links().regex("(http://www\\.haokoo\\.com/.+)").all());

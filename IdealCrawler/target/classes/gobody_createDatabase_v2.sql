@@ -103,3 +103,6 @@ insert into subject values (8, 'ÑµÁ·');
 insert into subject values (9, '¼õ·Ê');
 insert into subject values (10, '¼«ÏÞ');
 
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'192.168.0.102' IDENTIFIED BY '111111' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'192.168.0.101' IDENTIFIED BY '111111' WITH GRANT OPTION;
+GRANT ALL PRIVILEGES ON *.* TO 'root'@'192.168.0.100' IDENTIFIED BY '111111' WITH GRANT OPTION;

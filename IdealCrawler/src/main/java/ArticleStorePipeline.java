@@ -26,6 +26,7 @@ import com.clj.exceptions.IsNotDirectoryException;
 import com.clj.httpUtils.DownloaderUtil;
 import com.clj.httpUtils.FileLogHelper;
 import com.clj.httpUtils.ImageHelper;
+import com.clj.resources.Resources;
 
 import us.codecraft.webmagic.ResultItems;
 import us.codecraft.webmagic.Task;
@@ -33,9 +34,6 @@ import us.codecraft.webmagic.pipeline.Pipeline;
 
 public class ArticleStorePipeline implements Pipeline{
 
-	public static String SERVER_IP = "http://10.185.50.234:81";
-	public static String IMAGE_SERVER_NAME = "/GoBodyImgServer/img/";
-	public static String imagePath = "C:/Apache/htdocs/GoBodyImgServer/img/";
 	private File pictureStorePath;
 	private DaoUtil daoTool;
 	private String path;
@@ -163,7 +161,7 @@ public class ArticleStorePipeline implements Pipeline{
 		String id = UUID.randomUUID().toString();
 		articleInDB.setArticleid(id);
 		
-		String imgSubFolder = id + "/";
+		String imgSubFolder = "/" + id;
 		String articleImgFolder = path + imgSubFolder;
 		File f = new File(articleImgFolder);
 		f.mkdir();
@@ -206,48 +204,30 @@ public class ArticleStorePipeline implements Pipeline{
 					String suffix = getSuffixFromUrl(imgUrl);
 					String lineImgFileName = UUID.randomUUID().toString();
 					String imageName = lineImgFileName + "." + suffix;
-					String reSizeImageName = lineImgFileName + "_resize." + suffix;
+					String imagePath = articleImgFolder + "/" + imageName; 
 					
 					//3. 下载图片
 					downloadResult = DownloaderUtil.downloadFile(imgUrl, 
-												articleImgFolder, 
-												imageName);
-					if(downloadResult != -1 && checkImageValid(articleImgFolder + imageName))
+														imagePath);
+					if(downloadResult != -1 && checkImageValid(imagePath))
 					{
 						String finalImageName = imageName;
-						//4、如果下载成功，resiz图片
-/*						try 
-						{
-							ImageHelper.saveImageAsJpg(articleImgFolder + imageName, 
-									                   articleImgFolder + reSizeImageName, 
-									                   500, 0, false);
-							//5. resize后删除原图
-							File file = new File(articleImgFolder + imageName);
-							file.delete();
-							finalImageName = reSizeImageName;
-						} 
-						catch (Exception e) 
-						{
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-							finalImageName = imageName;
-							FileLogHelper.writeLog(articleImgFolder + imageName);
-						}*/
+						
 						/*set img sever url*/
-						String imgServerUrl = SERVER_IP+IMAGE_SERVER_NAME;
-						String urlPath = imgSubFolder + finalImageName;
-						contentString.append("<img>" + imgServerUrl + urlPath + "</img>" + "\n");
+						String imgUrlHeader = Resources.IMG_URI_HEADER;
+						String urlPath = imgSubFolder + "/" + finalImageName;
+						contentString.append("<img>" + imgUrlHeader + urlPath + "</img>" + "\n");
 						if("".equals(img1))
 						{
-							img1 = imgServerUrl + urlPath;
+							img1 = imgUrlHeader + urlPath;
 						}
 						else if("".equals(img2))
 						{
-							img2 = imgServerUrl + urlPath;
+							img2 = imgUrlHeader + urlPath;
 						}
 						else if("".equals(img3))
 						{
-							img3 = imgServerUrl + urlPath;
+							img3 = imgUrlHeader + urlPath;
 						}
 					}
 				}

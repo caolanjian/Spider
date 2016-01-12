@@ -16,7 +16,7 @@ public class DownloaderUtil {
 	    //1: 文件已存在
 		//0: 下载成功
 		//-1: 下载失败
-		public static int downloadFile(String httpAddress, String path, String fileName)
+		public static int downloadFile(String httpAddress, String filePath)
 		{
 			int resultValue = 0;
 			InputStream is = null;
@@ -24,7 +24,7 @@ public class DownloaderUtil {
 			
 			try
 			{
-				File file = new File(path + fileName);
+				File file = new File(filePath);
 				if(file.exists())
 				{
 					resultValue = 1;
@@ -86,7 +86,7 @@ public class DownloaderUtil {
 			return resultValue;
 		}
 		
-		public static int downloadFileByPost(String httpAddress, String path, String fileName, HashMap<String, String> parameters)
+		public static int downloadFileByPost(String httpAddress, String filePath, HashMap<String, String> parameters)
 		{
 			int resultValue = 0;
 			InputStream is = null;
@@ -94,7 +94,7 @@ public class DownloaderUtil {
 			
 			try
 			{
-				File file = new File(path + File.separator + fileName);
+				File file = new File(filePath);
 				if(file.exists())
 				{
 					resultValue = 1;
